@@ -7,7 +7,7 @@
 using namespace std;
 
 /*
-Class to hold image data
+Class to hold image data, doesn't allow editing
 For the time being only grayscale images are supported
 */
 class Image
@@ -26,28 +26,35 @@ protected:
 	shared_ptr<vector<unsigned char>> pixels;
 
 //Member functions
+private:
+	//Returns a part of the image
+	Image(unsigned int orgX, unsigned int orgY, unsigned int width, unsigned int height, const Image& otherImage) :
+		orgX(orgX), orgY(orgY), width(width), height(height), pixels(otherImage.pixels) {}
+
+protected:
+	//For use by derived classes
+	Image(unsigned int width = 1, unsigned int height = 1, unsigned char fillColour = 0) :
+		orgX(0), orgY(0), width(width), height(height),
+		pixels(new vector<unsigned char>(width*height, fillColour)) {}
+
 public:
 	//Image from file
 	Image(string filename);
 
-	Image(unsigned int width, unsigned int height, unsigned char fillColour = 0) : 
-		orgX(0), orgY(0), width(width), height(height), 
-		pixels(new vector<unsigned char>(width*height, fillColour)){}
+	virtual ~Image() {}
 
 	//Returns a part of the image
-	Image(unsigned int orgX, unsigned int orgY, unsigned int width, unsigned int height, Image& otherImage) :
-		orgX(orgX), orgY(orgY), width(width), height(height), pixels(otherImage.pixels) {}
-
-	~Image() {}
+	Image subImage(unsigned int orgX, unsigned int orgY, unsigned int width, unsigned int height) const;
 
 	//Getters
-	unsigned int GetWidth() const { return width; }
-	unsigned int GetHeight() const { return height; }
+	unsigned int getWidth() const { return width; }
+	unsigned int getHeight() const { return height; }
 
-	virtual unsigned char& operator() (unsigned int x, unsigned int y);
+	//Retrieves pixel value
 	virtual unsigned char operator() (unsigned int x, unsigned int y) const;
 
-	unsigned char Mean() const;
+	//Computes mean
+	unsigned char mean() const;
 };
 
 unsigned long L2Squared(const Image& im1, const Image& im2);
