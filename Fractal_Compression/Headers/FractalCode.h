@@ -1,4 +1,5 @@
 #pragma once
+
 struct FractalCode
 {
 public:
@@ -6,8 +7,8 @@ public:
 	unsigned int destY; //Destinarion region y component
 	unsigned int refX; //Reference region x component
 	unsigned int refY; //Reference region y component
-	unsigned char b; //Intensity beta-value
-	unsigned char s; //S_Form index
+	signed char b; //Intensity beta-value
+	unsigned char s; //SForm index
 
 public:
 	FractalCode(unsigned int destX = 0, unsigned int destY = 0,
