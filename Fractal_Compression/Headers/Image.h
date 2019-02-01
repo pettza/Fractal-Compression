@@ -17,7 +17,9 @@ protected:
 	//If an image is part of another, than this is its origin relative to the other
 	unsigned int orgX;
 	unsigned int orgY;
-	
+	//and the other's width
+	unsigned int realWidth;
+
 	//Image dimensions
 	unsigned int width;
 	unsigned int height;
@@ -29,12 +31,13 @@ protected:
 private:
 	//Returns a part of the image
 	Image(unsigned int orgX, unsigned int orgY, unsigned int width, unsigned int height, const Image& otherImage) :
-		orgX(orgX), orgY(orgY), width(width), height(height), pixels(otherImage.pixels) {}
+		orgX(orgX), orgY(orgY), realWidth(otherImage.realWidth),
+		width(width), height(height), pixels(otherImage.pixels) {}
 
 protected:
 	//For use by derived classes
 	Image(unsigned int width = 1, unsigned int height = 1, unsigned char fillColour = 0) :
-		orgX(0), orgY(0), width(width), height(height),
+		orgX(0), orgY(0), realWidth(width), width(width), height(height),
 		pixels(new vector<unsigned char>(width*height, fillColour)) {}
 
 public:

@@ -16,6 +16,7 @@ Image::Image(string filename)
 	//if image loaded correctly
 	if (data)
 	{
+		realWidth = w;
 		width = w;
 		height = h;
 
@@ -35,14 +36,14 @@ Image Image::subImage(unsigned int orgX, unsigned int orgY, unsigned int width, 
 
 unsigned char Image::operator()(unsigned int x, unsigned int y) const
 {
-	return (*pixels)[orgX + x + (orgY + y) * width];
+	return (*pixels)[orgX + x + (orgY + y) * realWidth];
 }
 
 unsigned char Image::mean() const
 {
 	unsigned long mean = 0;
-	for (auto y = 0; y < height; y++) {
-		for (auto x = 0; x < width; x++) {
+	for (unsigned int y = 0; y < height; y++) {
+		for (unsigned int x = 0; x < width; x++) {
 			mean += (*this)(x, y);
 		}
 	}
@@ -61,8 +62,8 @@ unsigned long L2Squared(const Image & im1, const Image & im2)
 		unsigned int height = im1.getHeight();
 		unsigned int width = im1.getWidth();
 		unsigned long L2 = 0;
-		for (auto y = 0; y < height; y++) {
-			for (auto x = 0; x < width; x++) {
+		for (unsigned int y = 0; y < height; y++) {
+			for (unsigned int x = 0; x < width; x++) {
 				unsigned long px1 = im1(x, y);
 				unsigned long px2 = im2(x, y);
 
