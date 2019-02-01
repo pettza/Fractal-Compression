@@ -1,13 +1,13 @@
-#include "S_Form.h"
+#include "SForm.h"
 
-const pair<unsigned int, unsigned int>& S_Form::operator()(unsigned int x, unsigned int y)
+const pair<unsigned int, unsigned int>& SForm::operator()(unsigned int x, unsigned int y) const
 {
 	return transform[x][y];
 }
 
-const array<S_Form, 8> S_Form::GetS_Forms()
+const array<SForm, 8> SForm::GetS_Forms()
 {
-	array<S_Form, 8> arr = {};
+	array<SForm, 8> arr = {};
 	for (unsigned int x = 0; x < N; x++) {
 		for (unsigned int y = 0; y < N; y++) {
 			arr[0].transform[x][y] = { x, y };
